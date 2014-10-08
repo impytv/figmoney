@@ -34,7 +34,7 @@ class RecurringTransactionsController < ApplicationController
   def simulate_transactions(recurrence_id)
     ActiveRecord::Base.transaction do
       #Delete previously simulated and unchanged
-      delete = "DELETE FROM transactions WHERE committed = false AND overridden_amount = false AND recurrence_id = #{recurrence_id})"
+      delete = "DELETE FROM transactions WHERE committed = false AND overridden_amount = false AND recurrence_id = #{recurrence_id}"
       Transaction.connection.execute(delete)
       #Insert new simulated transactions
 
