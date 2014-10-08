@@ -1,0 +1,29 @@
+<h1>Transactions</h1>
+
+<%= link_to 'Overview', controller: 'welcome' %><br>
+
+<%= link_to 'Recurring transactions', controller: 'recurring_transactions' %><br>
+
+<%= link_to 'Enter actual balance', new_transaction_path %>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Description</th>
+    <th>Change</th>
+    <th>Amount</th>
+    <th></th>
+  </tr>
+  <% @transactions.each do |transaction| %>
+    <tr>
+      <td><%= transaction.date %></td>
+      <td><%= transaction.description %></td>
+      <td><%= transaction.delta %></td>
+      <td><%= transaction.amount %></td>
+      <% if !transaction.committed %>
+      <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+

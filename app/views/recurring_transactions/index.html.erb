@@ -1,0 +1,26 @@
+<h1>Recurring transactions</h1>
+
+<%= link_to 'Overview', controller: 'welcome' %><br>
+<%= link_to 'Transactions', controller: 'transactions' %><br>
+<%= link_to 'New recurring transaction', new_recurring_transaction_path %>
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Date from</th>
+    <th>Date to</th>
+    <th>Recurrence</th>
+    <th>Amount</th>
+    <th></th>
+  </tr>
+  <% @recurring_transactions.each do |recurring_transaction| %>
+    <tr>
+      <td><%= recurring_transaction.description %></td>
+      <td><%= recurring_transaction.date_from %></td>
+      <td><%= recurring_transaction.date_to %></td>
+      <td><%= recurring_transaction.recurrence_code %></td>
+      <td><%= recurring_transaction.amount %></td>
+      <td><%= link_to 'Edit', edit_recurring_transaction_path(recurring_transaction) %></td>
+    </tr>
+  <% end %>
+</table>
+

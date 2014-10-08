@@ -1,0 +1,30 @@
+<h1>New recurring transaction</h1>
+
+<%= form_for :recurring_transaction, url: recurring_transactions_path do |f| %>
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </p>
+
+  <p>
+    <%= f.label :date_from %><br>
+    <%= f.date_field :date_from %><br>
+
+    <%= f.label :date_to %><br>
+    <%= f.date_field :date_to %>
+  </p>
+
+  <p>
+    <%= f.label :recurrence %><br>
+    <%= f.select(:recurrence_code, options_for_select([['Weekly','D7'],['Monthly','M1'],['Every three months','M3'],['Every four months','M4'],['Twice a year','M6'],['Yearly','M']])) %>
+  </p>
+ 
+  <p>
+    <%= f.label :amount %><br>
+    <%= f.number_field :amount %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

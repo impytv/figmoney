@@ -1,0 +1,12 @@
+<h1>Enter actual balance</h1>
+
+<%= form_for :transaction, url: transactions_path do |f| %>
+  <p>
+    <%= f.label :amount %><br>
+    <%= f.number_field :amount %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
