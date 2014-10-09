@@ -13,7 +13,7 @@ class TransactionsController < ApplicationController
   end
 
   def edit_transaction_params
-    params.require(:transaction).permit(:delta, :date)
+    params.require(:transaction).permit(:amount, :delta, :date)
   end
 
   def create

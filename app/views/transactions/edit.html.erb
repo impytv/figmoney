@@ -12,7 +12,11 @@
 
     <p>
       <%= f.label :amount %><br>
-      <%= f.number_field :delta %>
+      <% if @transaction.actual %>
+        <%= f.number_field :amount %>
+      <% else %>
+        <%= f.number_field :delta %>
+      <% end %>
     </p>
 
     <p>
