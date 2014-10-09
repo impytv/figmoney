@@ -17,7 +17,7 @@
       <td><%= recurring_transaction.description %></td>
       <td><%= recurring_transaction.date_from %></td>
       <td><%= recurring_transaction.date_to %></td>
-      <td><%= recurring_transaction.recurrence_code %></td>
+      <td><%= @recurrence_types[recurring_transaction.recurrence_code] %></td>
       <td align="right"><%= recurring_transaction.amount %></td>
       <td><%= link_to 'Edit', edit_recurring_transaction_path(recurring_transaction) %></td>
       <td><%= link_to 'Delete', recurring_transaction_path(recurring_transaction),

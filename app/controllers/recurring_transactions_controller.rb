@@ -4,6 +4,14 @@ class RecurringTransactionsController < ApplicationController
 
   def index
     @recurring_transactions = RecurringTransaction.all.order(:date_from)
+
+    @recurrence_types_from_db = RecurrenceType.all.order(:interval_type, :interval_length)
+
+    @recurrence_types = {}
+
+    @recurrence_types_from_db.each do |recurrence_type|
+      @recurrence_types[recurrence_type.recurrence_code] = recurrence_type.description
+    end
   end
 
   def edit
