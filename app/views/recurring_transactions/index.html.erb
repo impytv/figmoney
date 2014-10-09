@@ -10,7 +10,7 @@
     <th>Date to</th>
     <th>Recurrence</th>
     <th>Amount</th>
-    <th></th>
+    <th colspan="2"></th>
   </tr>
   <% @recurring_transactions.each do |recurring_transaction| %>
     <tr>
@@ -18,8 +18,10 @@
       <td><%= recurring_transaction.date_from %></td>
       <td><%= recurring_transaction.date_to %></td>
       <td><%= recurring_transaction.recurrence_code %></td>
-      <td><%= recurring_transaction.amount %></td>
+      <td align="right"><%= recurring_transaction.amount %></td>
       <td><%= link_to 'Edit', edit_recurring_transaction_path(recurring_transaction) %></td>
+      <td><%= link_to 'Delete', recurring_transaction_path(recurring_transaction),
+                                method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
 </table>

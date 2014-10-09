@@ -20,6 +20,18 @@ class RecurringTransactionsController < ApplicationController
     redirect_to action: "index"
   end
 
+  def destroy
+    recurring_transaction = RecurringTransaction.find(params[:id])
+
+    ActiveRecord::Base.transaction do
+      recurring_transaction.destroy
+
+      simulate_transactions(recurring_transaction.id)
+    end
+
+    redirect_to action: "index"
+  end
+
   def create
     recurring_transaction = RecurringTransaction.new(recurring_transaction_params)
     recurring_transaction.last_iteration = 0

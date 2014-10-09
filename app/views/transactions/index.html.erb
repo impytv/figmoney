@@ -18,11 +18,9 @@
     <tr>
       <td><%= transaction.date %></td>
       <td><%= transaction.description %></td>
-      <td><%= transaction.delta %></td>
-      <td><%= transaction.amount %></td>
-      <% if !transaction.committed %>
+      <td align="right"><%= transaction.delta %></td>
+      <td align="right"><%= transaction.amount %></td>
       <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
-      <% end %>
     </tr>
   <% end %>
 </table>
