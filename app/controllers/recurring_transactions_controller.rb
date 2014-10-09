@@ -23,6 +23,9 @@ class RecurringTransactionsController < ApplicationController
   def create
     recurring_transaction = RecurringTransaction.new(recurring_transaction_params)
     recurring_transaction.last_iteration = 0
+    if recurring_transaction.date_to.nil?
+      recurring_transaction.date_to = Date.new(3010,12,31)
+    end
 
     recurring_transaction.save
 
