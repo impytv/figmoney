@@ -21,7 +21,7 @@
       <td align="right"><%= recurring_transaction.amount %></td>
       <td><%= link_to 'Edit', edit_recurring_transaction_path(recurring_transaction) %></td>
       <td><%= link_to 'Delete', recurring_transaction_path(recurring_transaction),
-                                method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                                method: :delete, data: { confirm: 'Are you sure you want to delete?' } %></td>
     </tr>
   <% end %>
 </table>
