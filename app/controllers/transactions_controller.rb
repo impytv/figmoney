@@ -1,5 +1,7 @@
 class TransactionsController < ApplicationController
 
+  before_action :authenticate_user!
+
   def edit
     @transaction = Transaction.find(params[:id])
   end
@@ -44,7 +46,9 @@ class TransactionsController < ApplicationController
   end
 
   def index
-    @transactions = Transaction.all.order(:date, :actual, :delta, :description)
+
+    user = current_user
+    @transactions = Transaction.where("user_id = #{user.id}").order(:date, :actual, :delta, :description)
 
     amount = 0.0
     @transactions.each do |transaction|

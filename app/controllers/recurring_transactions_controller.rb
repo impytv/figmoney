@@ -1,9 +1,15 @@
 class RecurringTransactionsController < ApplicationController
+
+  before_action :authenticate_user!
+
   def new
   end
 
   def index
-    @recurring_transactions = RecurringTransaction.all.order(:date_from)
+
+    user = current_user
+
+    @recurring_transactions = RecurringTransaction.where("user_id = #{user.id}").order(:date_from)
 
     @recurrence_types_from_db = RecurrenceType.all.order(:interval_type, :interval_length)
 
@@ -43,6 +49,7 @@ class RecurringTransactionsController < ApplicationController
   def create
     recurring_transaction = RecurringTransaction.new(recurring_transaction_params)
     recurring_transaction.last_iteration = 0
+    recurring_transaction.user_id = current_user.id
     if recurring_transaction.date_to.nil?
       recurring_transaction.date_to = Date.new(3010,12,31)
     end
@@ -61,8 +68,8 @@ class RecurringTransactionsController < ApplicationController
       Transaction.connection.execute(delete)
       #Insert new simulated transactions
 
-      insert = "INSERT INTO transactions (description, delta, iteration, recurrence_id, date, committed, overridden_amount, created_at, updated_at)
-    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 day', false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      insert = "INSERT INTO transactions (description, delta, iteration, recurrence_id, date, committed, overridden_amount, user_id, created_at, updated_at)
+    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 day', false, false, user_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
       FROM recurring_transactions r, iterations i
      WHERE r.recurrence_code = i.recurrence_code
        AND i.interval_type = 'D'
@@ -70,7 +77,7 @@ class RecurringTransactionsController < ApplicationController
        AND r.date_from + i.stride * interval '1 day' BETWEEN r.date_from AND r.date_to
        AND (r.last_iteration + i.iteration) NOT IN (SELECT iteration FROM transactions WHERE recurrence_id = #{recurrence_id})
      UNION ALL
-    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 month', false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 month', false, false, user_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
       FROM recurring_transactions r, iterations i
      WHERE r.recurrence_code = i.recurrence_code
        AND i.interval_type = 'M'
