@@ -6,4 +6,7 @@
   <data-source source="LOCAL" name="Rails figmoney: test" uuid="a463a7c4-690d-4637-9dc0-c3cba66e23c5">
     <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
+  <data-source source="LOCAL" name="Rails figmoney: production" uuid="5cea7ace-89f9-4a46-b597-3a5b34a2b644">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>

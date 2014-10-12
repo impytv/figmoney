@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1929362975">
+  <component name="DataSourceManagerImpl" format="xml" hash="26510263">
     <data-source source="LOCAL" name="Rails figmoney: development" uuid="f2eef16d-a5d4-4a2f-883f-40f334039a94">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
@@ -12,6 +12,13 @@
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://db_1/myapp_test</jdbc-url>
+      <user-name>postgres</user-name>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails figmoney: production" uuid="5cea7ace-89f9-4a46-b597-3a5b34a2b644">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://db_1/postgres</jdbc-url>
       <user-name>postgres</user-name>
       <libraries />
     </data-source>
