@@ -7,9 +7,9 @@ class RecurringTransactionsController < ApplicationController
 
   def index
 
-    user = current_user
+    @user = current_user
 
-    @recurring_transactions = RecurringTransaction.where("user_id = #{user.id}").order(:date_from)
+    @recurring_transactions = RecurringTransaction.where("user_id = #{@user.id}").order(:date_from)
 
     @recurrence_types_from_db = RecurrenceType.all.order(:interval_type, :interval_length)
 

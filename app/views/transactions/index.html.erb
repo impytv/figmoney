@@ -1,8 +1,14 @@
 <h1>Transactions</h1>
 
-<%= link_to 'Overview', controller: 'welcome' %><br>
+User: <%= @user.email %>
+<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 
-<%= link_to 'Recurring transactions', controller: 'recurring_transactions' %><br>
+<br>
+
+
+<%#= link_to 'Overview', controller: 'welcome' %><br>
+
+<%= link_to 'Income and expenses', controller: 'recurring_transactions' %><br>
 
 <%= link_to 'Enter actual balance', new_transaction_path %>
 

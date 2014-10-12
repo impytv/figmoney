@@ -47,8 +47,8 @@ class TransactionsController < ApplicationController
 
   def index
 
-    user = current_user
-    @transactions = Transaction.where("user_id = #{user.id}").order(:date, :actual, :delta, :description)
+    @user = current_user
+    @transactions = Transaction.where("user_id = #{@user.id}").order(:date, :actual, :delta, :description)
 
     amount = 0.0
     @transactions.each do |transaction|

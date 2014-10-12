@@ -5,4 +5,3 @@ WORKDIR /myapp
 ADD Gemfile /myapp/Gemfile
 RUN bundle install
 ADD . /myapp
-ENV RAILS_ENV production
