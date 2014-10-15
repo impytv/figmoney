@@ -35,9 +35,9 @@ class TransactionsController < ApplicationController
 
       last_iteration_update = "UPDATE recurring_transactions r
                                   SET last_iteration = t.max_iteration
-                                 FROM (SELECT MAX(iteration) AS max_iteration, recurrence_id FROM transactions WHERE committed = true GROUP BY recurrence_id) t
+                                 FROM (SELECT MAX(iteration) AS max_iteration, recurrence_id 
+                                         FROM transactions WHERE user_id = #{@user.id} AND committed = true GROUP BY recurrence_id) t
                                 WHERE t.recurrence_id = r.id
-                                  AND t.user_id = #{@user.id}
                                   AND r.user_id = #{@user.id} "
 
       Transaction.connection.execute(last_iteration_update)
