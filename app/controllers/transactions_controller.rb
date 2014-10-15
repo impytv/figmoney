@@ -30,7 +30,7 @@ class TransactionsController < ApplicationController
       transaction.description = 'Actual balance'
       transaction.save
 
-      commit = "UPDATE transactions SET actual = false WHERE description = 'Actual balance'"
+      commit = "UPDATE transactions SET actual = false WHERE description != 'Actual balance'"
       Transaction.connection.execute(commit)
 
       commit = "UPDATE transactions SET committed = true WHERE date <= CURRENT_DATE AND user_id = #{@user.id}"
