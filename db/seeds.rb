@@ -32,6 +32,7 @@ RecurrenceType.delete_all
 
 save_recurrence_type('Weekly', 'D', 7)
 save_recurrence_type('Monthly', 'M', 1)
+save_recurrence_type('Every two months', 'M', 2)
 save_recurrence_type('Every three months', 'M', 3)
 save_recurrence_type('Every four months', 'M', 4)
 save_recurrence_type('Twice a year', 'M', 6)

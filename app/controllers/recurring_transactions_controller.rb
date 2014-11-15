@@ -3,6 +3,7 @@ class RecurringTransactionsController < ApplicationController
   before_action :authenticate_user!
 
   def new
+    set_recurrence_types
   end
 
   def index
@@ -11,14 +12,21 @@ class RecurringTransactionsController < ApplicationController
 
     @recurring_transactions = RecurringTransaction.where("user_id = #{@user.id}").order(:date_from)
 
+    set_recurrence_types    
+  end
+
+  def set_recurrence_types
     @recurrence_types_from_db = RecurrenceType.all.order(:interval_type, :interval_length)
 
     @recurrence_types = {}
+    @recurrence_types_array = []
 
     @recurrence_types_from_db.each do |recurrence_type|
       @recurrence_types[recurrence_type.recurrence_code] = recurrence_type.description
+      @recurrence_types_array.push( [ recurrence_type.description, recurrence_type.recurrence_code ] )
     end
   end
+
 
   def edit
     @recurring_transaction = RecurringTransaction.find(params[:id])
