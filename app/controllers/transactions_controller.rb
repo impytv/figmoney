@@ -55,14 +55,18 @@ class TransactionsController < ApplicationController
     @transactions = Transaction.where("user_id = #{@user.id} AND (committed = false OR actual = true)").order(date: :asc, actual: :asc, delta: :desc, description: :asc)
 
     amount = 0.0
+    actuals = 0
     @transactions.each do |transaction|
       if transaction.actual
         amount = transaction.amount
+        actuals = actuals + 1
       else
         amount = amount + transaction.delta
         transaction.amount = amount
       end
     end
+
+    @transactions = @transactions.drop(actuals - 1)
   end
 
 end
