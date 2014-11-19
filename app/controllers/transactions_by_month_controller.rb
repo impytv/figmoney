@@ -9,25 +9,29 @@ class TransactionsByMonthController < ApplicationController
     @monthly_transactions = []
     last_month = 0
     last_amount = 0
-    previous_month_amount = 0
+    previous_month_transaction = Transaction.new
+    previous_month_transaction.amount = 0
 
     transactions.each do |transaction|
       if last_month != transaction.date.month
-        last_month = transaction.date.month
-        
         monthly_transaction = Transaction.new
         monthly_transaction.date = Date.new(transaction.date.year, transaction.date.month, 1)
         monthly_transaction.amount = last_amount
-        monthly_transaction.delta = last_amount - previous_month_amount
         monthly_transaction.description = transaction.date.strftime('%Y %B')
 
         @monthly_transactions.push(monthly_transaction)
 
-        previous_month_amount = last_amount
+        previous_month_transaction.delta = last_amount - previous_month_transaction.amount
+
+        previous_month_transaction = monthly_transaction
+
+        last_month = transaction.date.month
       end
 
       last_amount = transaction.amount
     end
+
+    previous_month_transaction.delta = last_amount - previous_month_transaction.amount
   end
 
   def process_transactions(transactions)
