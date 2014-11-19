@@ -5,8 +5,10 @@ User: <%= @user.email %>
 <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 
 <br>
-<%#= link_to 'Overview', controller: 'welcome' %><br>
+<br>
 <%= link_to 'Transactions', controller: 'transactions' %><br>
+<%= link_to 'Transactions by month', controller: 'transactions_by_month' %><br>
+
 <%= link_to 'New income/expense', new_recurring_transaction_path %>
 <table>
   <tr>
