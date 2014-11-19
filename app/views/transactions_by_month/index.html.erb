@@ -15,13 +15,17 @@ User: <%= @user.email %>
 <table>
   <tr>
     <th>Description</th>
+    <th></th>
     <th>Amount</th>
+    <th></th>
     <th>Change</th>
   </tr>
   <% @monthly_transactions.each do |transaction| %>
     <tr>
       <td><%= transaction.description %></td>      
+      <td>&nbsp;&nbsp;&nbsp;</td>
       <td align="right"><%= transaction.amount %></td>
+      <td>&nbsp;&nbsp;&nbsp;</td>
       <td align="right"><%= transaction.delta %></td>      
     </tr>
   <% end %>
