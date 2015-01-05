@@ -52,7 +52,7 @@ class TransactionsController < ApplicationController
 
   def index
     @user = current_user
-    @transactions = Transaction.where("user_id = #{@user.id} AND (committed = false OR actual = true)").order(date: :asc, actual: :asc, delta: :desc, description: :asc)
+    @transactions = Transaction.where("user_id = ? AND (committed = false OR actual = true)","#{@user.id}").order(date: :asc, actual: :asc, delta: :desc, description: :asc)
 
     @transactions = process_transactions(@transactions)
   end
@@ -70,7 +70,11 @@ class TransactionsController < ApplicationController
       end
     end
 
-    return transactions.drop(actuals - 1)
+    if actuals > 0
+      return transactions.drop(actuals - 1)
+    end
+
+    return transactions
   end
 
 end

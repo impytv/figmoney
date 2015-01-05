@@ -10,7 +10,7 @@ class RecurringTransactionsController < ApplicationController
 
     @user = current_user
 
-    @recurring_transactions = RecurringTransaction.where("user_id = #{@user.id}").order(:date_from)
+    @recurring_transactions = RecurringTransaction.where("user_id = ?", "#{@user.id}").order(:date_from)
 
     set_recurrence_types    
   end
@@ -30,6 +30,8 @@ class RecurringTransactionsController < ApplicationController
 
   def edit
     @recurring_transaction = RecurringTransaction.find(params[:id])
+
+    set_recurrence_types
   end
 
   def update

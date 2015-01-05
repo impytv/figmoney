@@ -16,9 +16,8 @@
 
     <p>
       <%= f.label :recurrence %><br>
-      <%= f.select(:recurrence_code,
-                   options_for_select([['Weekly','D7'],['Monthly','M1'],['Every three months','M3'],['Every four months','M4'],['Twice a year','M6'],['Yearly','M12']],
-                    @recurring_transaction.recurrence_code)) %>
+
+      <%= f.select(:recurrence_code, options_for_select(@recurrence_types_array, @recurring_transaction.recurrence_code)) %>
     </p>
 
     <p>
