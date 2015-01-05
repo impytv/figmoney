@@ -41,6 +41,26 @@ class TransactionsController < ApplicationController
                                   AND r.user_id = #{@user.id} "
 
       Transaction.connection.execute(last_iteration_update)
+
+      insert = "INSERT INTO transactions (description, delta, iteration, recurrence_id, date, committed, overridden_amount, user_id, actual, created_at, updated_at)
+    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 day', false, false, user_id, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      FROM recurring_transactions r, iterations i
+     WHERE r.recurrence_code = i.recurrence_code
+       AND i.interval_type = 'D'
+       AND r.user_id = #{@user.id}
+       AND r.date_from + i.stride * interval '1 day' BETWEEN r.date_from AND r.date_to
+       AND NOT EXISTS (SELECT * FROM transactions t WHERE r.id = t.recurrence_id AND t.iteration = r.last_iteration + i.iteration)
+     UNION ALL
+    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 month', false, false, user_id, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      FROM recurring_transactions r, iterations i
+     WHERE r.recurrence_code = i.recurrence_code
+       AND i.interval_type = 'M'
+       AND r.user_id = #{@user.id}
+       AND r.date_from + i.stride * interval '1 month' BETWEEN r.date_from AND r.date_to
+       AND NOT EXISTS (SELECT * FROM transactions t WHERE r.id = t.recurrence_id AND t.iteration = r.last_iteration + i.iteration)"
+
+      Transaction.connection.execute(insert)
+
     end
 
     redirect_to action: "index"
