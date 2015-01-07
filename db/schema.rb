@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011220433) do
+ActiveRecord::Schema.define(version: 20150107071637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "adminpack"
 
   create_table "commits", force: true do |t|
     t.integer  "user_id"
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(version: 20141011220433) do
     t.integer  "last_iteration"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "last_date"
   end
 
   create_table "transactions", force: true do |t|
@@ -67,6 +69,7 @@ ActiveRecord::Schema.define(version: 20141011220433) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "actual"
+    t.date     "scheduled_date"
   end
 
   create_table "users", force: true do |t|

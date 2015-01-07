@@ -79,7 +79,7 @@ class RecurringTransactionsController < ApplicationController
       #Insert new simulated transactions
 
       insert = "INSERT INTO transactions (description, delta, iteration, recurrence_id, date, committed, overridden_amount, user_id, actual, created_at, updated_at)
-    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 day', false, false, user_id, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.last_date + i.stride * interval '1 day', false, false, user_id, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
       FROM recurring_transactions r, iterations i
      WHERE r.recurrence_code = i.recurrence_code
        AND i.interval_type = 'D'
@@ -87,7 +87,7 @@ class RecurringTransactionsController < ApplicationController
        AND r.date_from + i.stride * interval '1 day' BETWEEN r.date_from AND r.date_to
        AND (r.last_iteration + i.iteration) NOT IN (SELECT iteration FROM transactions WHERE recurrence_id = #{recurrence_id})
      UNION ALL
-    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.date_from + i.stride * interval '1 month', false, false, user_id, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    SELECT r.description, r.amount, r.last_iteration + i.iteration, r.id, r.last_date + i.stride * interval '1 month', false, false, user_id, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
       FROM recurring_transactions r, iterations i
      WHERE r.recurrence_code = i.recurrence_code
        AND i.interval_type = 'M'
