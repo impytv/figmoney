@@ -7,12 +7,17 @@ class RecurringTransactionsController < ApplicationController
   end
 
   def index
-
     @user = current_user
+        
+    set_recurrence_types    
 
     @recurring_transactions = RecurringTransaction.where("user_id = ?", "#{@user.id}").order(:date_from)
 
-    set_recurrence_types    
+    @normalized_month_total = 0.0
+    @recurring_transactions.each do |recurring_transaction|
+      recurring_transaction.normalized_month = @recurrence_factor[recurring_transaction.recurrence_code] * recurring_transaction.amount
+      @normalized_month_total = @normalized_month_total + recurring_transaction.normalized_month
+    end
   end
 
   def set_recurrence_types
@@ -20,12 +25,19 @@ class RecurringTransactionsController < ApplicationController
 
     @recurrence_types = {}
     @recurrence_types_array = []
+    @recurrence_factor = {}
 
     @recurrence_types_from_db.each do |recurrence_type|
       @recurrence_types[recurrence_type.recurrence_code] = recurrence_type.description
       @recurrence_types_array.push( [ recurrence_type.description, recurrence_type.recurrence_code ] )
+      if recurrence_type.interval_type == "M"
+        @recurrence_factor[recurrence_type.recurrence_code] = 1.0 / recurrence_type.interval_length
+       else
+        @recurrence_factor[recurrence_type.recurrence_code] = 30.4375 / recurrence_type.interval_length
+      end 
     end
   end
+
 
   def edit
     @recurring_transaction = RecurringTransaction.find(params[:id])

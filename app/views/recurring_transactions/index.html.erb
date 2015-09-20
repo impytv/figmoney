@@ -17,6 +17,7 @@ User: <%= @user.email %>
     <th>Date to</th>
     <th>Recurrence</th>
     <th>Amount</th>
+    <th>Per month</th>    
     <th colspan="2"></th>
   </tr>
   <% @recurring_transactions.each do |recurring_transaction| %>
@@ -26,10 +27,18 @@ User: <%= @user.email %>
       <td><%= recurring_transaction.date_to %></td>
       <td><%= @recurrence_types[recurring_transaction.recurrence_code] %></td>
       <td align="right"><%= recurring_transaction.amount %></td>
+      <td align="right"><%= recurring_transaction.normalized_month %></td>
       <td><%= link_to 'Edit', edit_recurring_transaction_path(recurring_transaction) %></td>
       <td><%= link_to 'Delete', recurring_transaction_path(recurring_transaction),
                                 method: :delete, data: { confirm: 'Are you sure you want to delete?' } %></td>
     </tr>
   <% end %>
+  <tr>
+    <td colspan="5"><b>Total</b></td>   
+    <td align="right"><b><%= @normalized_month_total %></b></td>    
+    <td colspan="2"></td>
+   </tr>
 </table>
+
+
 
